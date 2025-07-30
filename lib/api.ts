@@ -55,6 +55,18 @@ export async function fetchNotes(
   }
 }
 
+export async function fetchNoteById(id: string): Promise<Note> {
+  try {
+    const { data } = await instance.get<Note>(`/notes/${id}`);
+    return data;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error('Failed to fetch note details');
+  }
+}
+
 export async function createNote(note: CreateNotePayload): Promise<Note> {
   try {
     const { data } = await instance.post<Note>('/notes', note);
